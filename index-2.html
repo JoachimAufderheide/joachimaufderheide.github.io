@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joachim Aufderheide — Ancient Philosophy, King's College London</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:        #1a1814;
+      --ink-soft:   #3d3830;
+      --ink-faint:  #6b6560;
+      --paper:      #f7f4ef;
+      --cream:      #ede9e0;
+      --rule:       #c8bfaf;
+      --gold:       #8b6914;
+      --gold-light: #b08c2a;
+      --link:       #5a3e1b;
+      --link-h:     #8b6914;
+      --serif:      'EB Garamond', 'Libre Baskerville', Georgia, serif;
+      --display:    'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.75;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem;
+    }
+    nav .site-name {
+      font-family: var(--display);
+      font-size: 1rem; font-style: italic;
+      color: var(--cream); letter-spacing: 0.02em;
+      white-space: nowrap; padding: 0.85rem 0;
+    }
+    nav ul { list-style: none; display: flex; gap: 0.25rem; flex-wrap: wrap; }
+    nav ul li a {
+      display: block; font-family: var(--serif);
+      font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--rule); text-decoration: none;
+      padding: 0.85rem 0.75rem; transition: color 0.2s;
+    }
+    nav ul li a:hover { color: var(--gold-light); }
+
+    /* HERO */
+    header.hero {
+      background: var(--ink);
+      padding: 5rem 2rem 4.5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    header.hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 39px,
+        rgba(200,191,175,0.07) 39px, rgba(200,191,175,0.07) 40px
+      );
+    }
+    header.hero .inner { position: relative; max-width: 800px; margin: 0 auto; }
+    header.hero .label {
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold-light); margin-bottom: 1.25rem;
+    }
+    header.hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 300;
+      line-height: 1.1; color: var(--paper); margin-bottom: 0.6rem;
+    }
+    header.hero .subtitle {
+      font-family: var(--display); font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--rule); font-weight: 300; margin-bottom: 2rem;
+    }
+    header.hero .hero-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+    header.hero .hero-links a {
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold-light); text-decoration: none;
+      border-bottom: 1px solid rgba(176,140,42,0.4); padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    header.hero .hero-links a:hover { color: var(--paper); border-color: var(--paper); }
+
+    /* LAYOUT */
+    main { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+    section {
+      padding-top: 4rem; border-top: 1px solid var(--rule);
+      margin-top: 4rem;
+      opacity: 1; transform: none;
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    section.animate-ready { opacity: 0; transform: translateY(18px); }
+    section.visible { opacity: 1 !important; transform: none !important; }
+    section:first-of-type { margin-top: 4rem; }
+
+    /* HEADINGS */
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400;
+      color: var(--ink); margin-bottom: 1.75rem;
+    }
+    h2 .section-num {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.3rem;
+    }
+    h3 {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--ink-faint); margin: 2.25rem 0 1rem;
+    }
+
+    /* ABOUT GRID */
+    .about-grid { display: grid; grid-template-columns: 1fr 260px; gap: 3rem; align-items: start; }
+    @media (max-width: 660px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-text p + p { margin-top: 1rem; }
+
+    .info-card {
+      background: var(--cream); border: 1px solid var(--rule);
+      padding: 1.5rem; font-size: 0.88rem; line-height: 1.6;
+    }
+    .info-card .card-label {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-faint); margin-bottom: 0.3rem; margin-top: 1rem;
+    }
+    .info-card .card-label:first-child { margin-top: 0; }
+    .info-card a { color: var(--link); }
+    .info-card a:hover { color: var(--link-h); }
+    .orcid-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #a6ce39; color: #fff;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem;
+      text-decoration: none; margin-top: 0.25rem; transition: opacity 0.2s;
+    }
+    .orcid-badge:hover { opacity: 0.85; color: #fff !important; }
+
+    /* TAGS */
+    .interest-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .interest-tags span {
+      background: var(--cream); border: 1px solid var(--rule);
+      padding: 0.3rem 0.85rem; font-size: 0.82rem;
+      letter-spacing: 0.04em; color: var(--ink-soft);
+    }
+
+    /* PUBLICATIONS */
+    .pub-list { list-style: none; }
+    .pub-list li {
+      padding: 1.1rem 0 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--cream);
+      font-size: 0.96rem; line-height: 1.65; position: relative;
+    }
+    .pub-list li::before {
+      content: ''; position: absolute; left: 0; top: 1.55rem;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+    }
+    .pub-list li a { color: var(--link); text-decoration: none; border-bottom: 1px solid rgba(90,62,27,0.3); }
+    .pub-list li a:hover { color: var(--link-h); border-color: var(--link-h); }
+    .pub-list li em { font-style: italic; }
+    .pub-venue { display: block; font-size: 0.82rem; color: var(--ink-faint); margin-top: 0.1rem; }
+    .pub-year { font-size: 0.78rem; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; }
+
+    /* WIP */
+    .wip-list { list-style: none; }
+    .wip-list li {
+      padding: 0.75rem 0 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--cream);
+      font-size: 0.94rem; font-style: italic; position: relative;
+    }
+    .wip-list li::before { content: '\25E6'; position: absolute; left: 0; color: var(--rule); }
+    .wip-status { font-style: normal; font-size: 0.75rem; color: var(--ink-faint); letter-spacing: 0.05em; }
+
+    /* CV */
+    .cv-block { margin-bottom: 0.5rem; }
+    .cv-row {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--cream);
+      font-size: 0.93rem;
+    }
+    .cv-date { color: var(--ink-faint); font-size: 0.82rem; padding-top: 0.05rem; }
+    .cv-detail strong { font-weight: 600; }
+    .cv-detail em { font-style: italic; color: var(--ink-soft); }
+    @media (max-width: 500px) { .cv-row { grid-template-columns: 1fr; gap: 0.1rem; } }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink); color: var(--rule);
+      font-size: 0.82rem; text-align: center;
+      padding: 2.5rem 2rem; letter-spacing: 0.04em;
+    }
+    footer a { color: var(--gold-light); text-decoration: none; }
+    footer a:hover { color: var(--paper); }
+    a { transition: color 0.18s; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="site-name">Joachim Aufderheide</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#cv">CV</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="inner">
+    <p class="label">Reader in Philosophy &nbsp;&#183;&nbsp; King&#8217;s College London</p>
+    <h1>Joachim Aufderheide</h1>
+    <p class="subtitle">Ancient Greek &amp; Buddhist Philosophy</p>
+    <div class="hero-links">
+      <a href="https://orcid.org/0000-0001-7080-4256" target="_blank" rel="noopener">ORCID</a>
+      <a href="https://kclpure.kcl.ac.uk/portal/en/persons/joachim.aufderheide" target="_blank" rel="noopener">KCL Research Portal</a>
+      <a href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section id="about">
+    <h2><span class="section-num">01</span>About</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a Reader in Philosophy at King&#8217;s College London, where I have worked since 2011. My research centres on ancient Greek philosophy &#8212; in particular the ethics, epistemology, and moral psychology of Plato and Aristotle &#8212; and on cross-traditional work connecting ancient Greek and Buddhist philosophy.</p>
+        <p>A central thread of my work concerns pleasure, happiness, and the highest good in Plato and Aristotle, including ancient value theory more broadly and altered states of mind &#8212; drinking, dreaming, meditation, divine inspiration &#8212; as they figure in ancient authors. A second thread explores contemplation and the life of philosophy in Plato and Aristotle. A significant part of my research is also devoted to Indian philosophy, especially later Buddhist schools, and I engage comparatively with figures such as Vasubandhu.</p>
+        <p>My current projects explore the role of contemplation in Plato and Aristotle, the connection between law and the divine in Aristotle&#8217;s practical philosophy, and a problem about dreaming in Plato&#8217;s <em>Republic</em>. I am, moreover, thinking about the role of theoretical knowledge in becoming morally good, as well as the relevance of desire for acquiring the highest theoretical insight. This interest benefits from engagement with Buddhist philosophers.</p>
+        <p>I am co-editor (with Mehmet Erginel) of <em>New Perspectives on Plato&#8217;s Pleasures</em>, forthcoming with Brill.</p>
+        <div class="interest-tags">
+          <span>Aristotle</span>
+          <span>Plato</span>
+          <span>Pleasure &amp; Happiness</span>
+          <span>Ancient Ethics</span>
+          <span>Greek Ethics</span>
+          <span>Contemplation</span>
+          <span>Dreaming</span>
+          <span>Buddhist Philosophy</span>
+          <span>Epistemology</span>
+          <span>Cross-traditional Philosophy</span>
+          <span>Vasubandhu</span>
+        </div>
+      </div>
+      <aside class="info-card">
+        <p class="card-label">Position</p>
+        <p>Reader in Philosophy</p>
+        <p class="card-label">Institution</p>
+        <p>King&#8217;s College London<br>Philosophy Department<br>WC2R 2LS</p>
+        <p class="card-label">Email</p>
+        <p><a href="mailto:joachim.aufderheide@kcl.ac.uk">joachim.aufderheide@kcl.ac.uk</a></p>
+        <p class="card-label">Research record</p>
+        <a class="orcid-badge" href="https://orcid.org/0000-0001-7080-4256" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12 12-5.373 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947-.947-.431-.947-.947.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-1.016 5.016-5.344 5.016h-3.9V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.866-1.388 3.866-3.722 0-2.178-1.138-3.722-3.872-3.722h-2.291z"/>
+          </svg>
+          ORCID
+        </a>
+        <p class="card-label">KCL Profile</p>
+        <p><a href="https://kclpure.kcl.ac.uk/portal/en/persons/joachim.aufderheide" target="_blank" rel="noopener">KCL Research Portal &#8594;</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="research">
+    <h2><span class="section-num">02</span>Research</h2>
+
+    <h3>Research Interests</h3>
+    <p><strong>Area of Specialisation:</strong> Ancient Greek Philosophy &nbsp;&#183;&nbsp; <strong>Areas of Competence:</strong> Buddhist Philosophy &#183; Ethics &#183; Epistemology &#183; Modern Philosophy</p>
+
+    <h3>Three Main Tracks</h3>
+    <p style="margin-top:0.75rem;"><strong>1. Pleasure in Plato and Aristotle.</strong> Much of my published work centres on theories of pleasure and the highest good in ancient Greek philosophy. This includes close study of <em>Nicomachean Ethics</em> X, the treatment of pleasure in Plato&#8217;s <em>Republic</em> and <em>Philebus</em>, Eudoxus&#8217; hedonism, and ancient value theory more broadly. A recurring question is how pleasure, contemplation, and happiness relate to one another in the ancient ethical tradition.</p>
+    <p style="margin-top:1rem;"><strong>2. Contemplation and the life of philosophy in Plato and Aristotle.</strong> A second track asks what role theoretical knowledge and the philosophical life play in Plato&#8217;s and Aristotle&#8217;s ethics and political philosophy. This involves work on the place of the divine and of law in Aristotle&#8217;s practical thought, and how altered states &#8212; dreaming, intoxication, divine inspiration &#8212; illuminate the boundaries of philosophical understanding.</p>
+    <p style="margin-top:1rem;"><strong>3. Buddhist philosophy, especially Vasubandhu.</strong> A significant part of my research engages with Indian philosophy, in particular the later Buddhist philosopher Vasubandhu. Comparative work with Plato has explored dreaming and perception, theories of personal identity, and no-self doctrines. I was a member of the Buddhism-Platonism research group, and this cross-traditional engagement continues to inform my thinking about knowledge, selfhood, and the limits of experience.</p>
+
+    <h3>Work in Progress</h3>
+    <ul class="wip-list">
+      <li>&#8216;Law and the divine in Aristotle&#8217; <span class="wip-status">[under review]</span></li>
+      <li>&#8216;Sipping Wisdom: the virtues of intoxication in Plato&#8217;s <em>Laws</em>&#8217; <span class="wip-status">[conference draft]</span></li>
+      <li>&#8216;Contemplation in Aristotle&#8217;s other ethics&#8217; <span class="wip-status">[chapter, forthcoming in <em>Aristotle&#8217;s Other Ethics</em>, OUP]</span></li>
+      <li>&#8216;Pleasure in Plato&#8217;s <em>Republic</em>: Beyond Remedy?&#8217; <span class="wip-status">[forthcoming in <em>New Perspectives on Plato&#8217;s Pleasures</em>, Brill]</span></li>
+      <li>&#8216;Dreaming in Plato&#8217;s <em>Republic</em>&#8217; <span class="wip-status">[journal article; draft available on request]</span></li>
+    </ul>
+
+    <h3>Edited Volume</h3>
+    <ul class="pub-list" style="margin-top:0.5rem;">
+      <li><em>New Perspectives on Plato&#8217;s Pleasures</em>, edited with Mehmet Erginel. <span class="pub-venue">Brill [accepted]</span></li>
+    </ul>
+  </section>
+
+  <section id="publications">
+    <h2><span class="section-num">03</span>Publications</h2>
+    <p style="font-size:0.88rem; color:var(--ink-faint); margin-bottom:0.75rem;">Full record available via <a href="https://orcid.org/0000-0001-7080-4256" target="_blank" rel="noopener" style="color:var(--link);">ORCID</a> and the <a href="https://kclpure.kcl.ac.uk/portal/en/persons/joachim.aufderheide" target="_blank" rel="noopener" style="color:var(--link);">KCL Research Portal</a>.</p>
+
+    <h3>Books</h3>
+    <ul class="pub-list">
+      <li>
+        <a href="https://www.cambridge.org/core/books/aristotles-nicomachean-ethics-book-x/0CAF5A38A6FDAD090E0EDC84E83CE93F" target="_blank" rel="noopener"><em>Aristotle&#8217;s Nicomachean Ethics Book X</em></a>
+        <span class="pub-venue">Cambridge University Press <span class="pub-year">2020</span></span>
+      </li>
+      <li>
+        <a href="http://www.oxfordscholarship.com/view/10.1093/acprof:oso/9780198714019.001.0001/acprof-9780198714019" target="_blank" rel="noopener"><em>The Highest Good in Aristotle and Kant</em></a>, ed. with Ralf Bader
+        <span class="pub-venue">Oxford University Press <span class="pub-year">2015</span></span>
+      </li>
+    </ul>
+
+    <h3>Articles &amp; Chapters</h3>
+    <ul class="pub-list">
+      <li>
+        <a href="https://doi.org/10.5040/9781350460393.0019" target="_blank" rel="noopener">&#8216;No-self in Plato and Vasubandhu&#8217;</a>
+        <span class="pub-venue">In Zilioli &amp; Westerhoff (edd.), <em>Ancient Greek and Indian Buddhist Philosophers on Reality and Selfhood</em>, Bloomsbury, 165&#8211;180 <span class="pub-year">2026</span></span>
+      </li>
+      <li>
+        <a href="http://doi.org/10.1515/9781399546850-019" target="_blank" rel="noopener">&#8216;&#8220;I can&#8217;t get no satisfaction&#8221;: Pleasure and happiness in <em>Republic</em> 585&#8211;7&#8217;</a>
+        <span class="pub-venue">In McCabe &amp; Tr&#233;panier (edd.), <em>Rereading the Republic</em>, Edinburgh UP, 271&#8211;290 <span class="pub-year">2025</span></span>
+      </li>
+      <li>
+        <a href="https://academic.oup.com/book/56264/chapter-abstract/445073996" target="_blank" rel="noopener">&#8216;Dreaming, perception, and knowledge in Plato&#8217;s <em>Theaetetus</em> and Vasubandhu&#8217;s <em>Twenty Verses</em>&#8217;</a>
+        <span class="pub-venue">In Carpenter &amp; Harter (edd.), <em>Crossing the Stream, Leaving the Cave</em>, OUP, 49&#8211;72 <span class="pub-year">2024</span></span>
+      </li>
+      <li>
+        <a href="https://doi.org/10.1080/09608788.2023.2180482" target="_blank" rel="noopener">&#8216;On philosophy in Plato&#8217;s <em>Republic</em>: a Critical Note of Sarah Broadie&#8217;s &#8220;Plato&#8217;s Sun-Like Good&#8221;&#8217;</a>
+        <span class="pub-venue"><em>British Journal for the History of Philosophy</em>, 1279&#8211;88 <span class="pub-year">2023</span></span>
+      </li>
+      <li>
+        &#8216;Eudoxus&#8217; hedonism&#8217;
+        <span class="pub-venue">In Coope &amp; Sattler (edd.), <em>Ancient Ethics and the Natural World</em>, CUP, 185&#8211;202 <span class="pub-year">2021</span></span>
+      </li>
+      <li>
+        <a href="https://www.cambridge.org/core/journals/classical-quarterly/article/republic-585bd-argument-and-text/BCC00369914877705616268CDA5B20CD" target="_blank" rel="noopener">&#8216;<em>Republic</em> 585b&#8211;d: argument and text&#8217;</a>
+        <span class="pub-venue"><em>The Classical Quarterly</em> 68(1): 53&#8211;68 <span class="pub-year">2018</span></span>
+      </li>
+      <li>
+        <a href="https://www.cambridge.org/core/books/rereading-ancient-philosophy/is-aristotle-a-virtue-ethicist/C77BD5BB2AC8D7D0EA1F0DBC0C660E03" target="_blank" rel="noopener">&#8216;Is Aristotle a virtue ethicist?&#8217;</a>
+        <span class="pub-venue">In Harte &amp; Woolf (edd.), <em>Rereading Ancient Philosophy</em>, CUP, 199&#8211;220 <span class="pub-year">2017</span></span>
+      </li>
+      <li>
+        <a href="http://nrs.harvard.edu/urn-3:hlnc.essay:AufderheideJ.Aristotelian_Piety_Reconsidered.2016" target="_blank" rel="noopener">&#8216;Aristotelian Piety Reconsidered&#8217;</a>
+        <span class="pub-venue"><em>CHS Research Bulletin</em> <span class="pub-year">2017</span></span>
+      </li>
+      <li>
+        <a href="http://booksandjournals.brillonline.com/content/journals/10.1163/15685284-12341309" target="_blank" rel="noopener">&#8216;Aristotle against Delos: Pleasure in <em>Nicomachean Ethics</em> X&#8217;</a>
+        <span class="pub-venue"><em>Phronesis</em> 61(3): 284&#8211;306 <span class="pub-year">2016</span></span>
+      </li>
+      <li>
+        <a href="http://www.oxfordscholarship.com/view/10.1093/acprof:oso/9780198714019.001.0001/acprof-9780198714019-chapter-3" target="_blank" rel="noopener">&#8216;The content of happiness: a new case for the&#244;ria&#8217;</a>
+        <span class="pub-venue">In <em>The Highest Good in Aristotle and Kant</em>, OUP, 36&#8211;59 <span class="pub-year">2015</span></span>
+      </li>
+      <li>
+        <a href="https://www.pdcnet.org/collection/show?id=ancientphil_2013_0033_0001_0135_0157&amp;file_type=pdf" target="_blank" rel="noopener">&#8216;Processes as pleasures in EN vii 11&#8211;14: a new approach&#8217;</a>
+        <span class="pub-venue"><em>Ancient Philosophy</em> 33(1): 135&#8211;157 <span class="pub-year">2013</span></span>
+      </li>
+      <li>
+        <a href="http://dx.doi.org/10.1080/09608788.2013.825230" target="_blank" rel="noopener">&#8216;An inconsistency in Plato&#8217;s <em>Philebus</em>?&#8217;</a>
+        <span class="pub-venue"><em>British Journal for the History of Philosophy</em> 21(5): 817&#8211;837 <span class="pub-year">2013</span></span>
+      </li>
+    </ul>
+
+    <h3>Selected Reviews</h3>
+    <ul class="pub-list">
+      <li>Review of R. Majithia, <em>The highest good in the Nicomachean Ethics and the Bhagavad Gita</em>, <a href="https://bmcr.brynmawr.edu/2025/2025.10.52/" target="_blank" rel="noopener"><em>Bryn Mawr Classical Review</em></a> <span class="pub-year">2025</span></li>
+      <li>Review of B. Reece, <em>Aristotle on happiness, virtue, and wisdom</em> (with Daniel Ferguson), <a href="https://doi.org/10.1080/09608788.2024.2404441" target="_blank" rel="noopener"><em>British Journal for the History of Philosophy</em></a>, 1502&#8211;7 <span class="pub-year">2024</span></li>
+      <li>Review of J.K. Ward, <em>Searching for the Divine in Plato and Aristotle</em>, <a href="https://doi.org/10.1017/S0009840X23000847" target="_blank" rel="noopener"><em>Classical Review</em></a> <span class="pub-year">2023</span></li>
+      <li>Review of R. Kamtekar (ed.), <em>Oxford Studies in Ancient Philosophy: Virtue and Happiness</em>, <em>Philosophical Review</em> 124(2): 292&#8211;5 <span class="pub-year">2015</span></li>
+      <li>Review of R. Weiss, <em>Philosophers in the Republic</em>, <a href="https://doi.org/10.1093/mind/fzu051" target="_blank" rel="noopener"><em>Mind</em></a> 123(489): 256&#8211;60 <span class="pub-year">2014</span></li>
+    </ul>
+  </section>
+
+  <section id="cv">
+    <h2><span class="section-num">04</span>Academic CV</h2>
+
+    <h3>Employment</h3>
+    <div class="cv-block">
+      <div class="cv-row"><span class="cv-date">2021&#8211;present</span><span class="cv-detail"><strong>Reader</strong>, <em>King&#8217;s College London</em></span></div>
+      <div class="cv-row"><span class="cv-date">2018&#8211;2021</span><span class="cv-detail"><strong>Senior Lecturer</strong>, <em>King&#8217;s College London</em></span></div>
+      <div class="cv-row"><span class="cv-date">2011&#8211;2018</span><span class="cv-detail"><strong>Lecturer</strong>, <em>King&#8217;s College London</em></span></div>
+    </div>
+
+    <h3>Education</h3>
+    <div class="cv-block">
+      <div class="cv-row"><span class="cv-date">2007&#8211;2011</span><span class="cv-detail"><strong>PhD in Philosophy</strong>, <em>University of St Andrews</em></span></div>
+      <div class="cv-row"><span class="cv-date">2006&#8211;2007</span><span class="cv-detail"><strong>M.Litt. in Philosophy</strong>, <em>University of St Andrews</em></span></div>
+      <div class="cv-row"><span class="cv-date">2001&#8211;2006</span><span class="cv-detail">Philosophy, Greek, Latin, <em>University of G&#246;ttingen</em></span></div>
+    </div>
+
+    <h3>Selected Grants &amp; Fellowships</h3>
+    <div class="cv-block">
+      <div class="cv-row"><span class="cv-date">2023&#8211;2025</span><span class="cv-detail"><strong>Newton International Fellowship</strong> (PI; &#163;60,000) &#8212; awarded to support a two-year post-doctoral fellowship (held by Dr Daniel Ferguson)</span></div>
+      <div class="cv-row"><span class="cv-date">2024</span><span class="cv-detail">Conference Grant, King&#8217;s AHRI / BSHP / King&#8217;s Philosophy (&#163;3,000)</span></div>
+      <div class="cv-row"><span class="cv-date">2018</span><span class="cv-detail">Conference Grant, King&#8217;s AHRI / MIND / BSHP (&#163;7,000)</span></div>
+      <div class="cv-row"><span class="cv-date">2016</span><span class="cv-detail"><strong>Harvard Center for Hellenic Studies Fellowship</strong> ($30,000), Washington DC</span></div>
+      <div class="cv-row"><span class="cv-date">2010&#8211;2011</span><span class="cv-detail"><strong>Jacobsen Fellowship</strong> (&#163;8,000), Royal Institute of Philosophy</span></div>
+      <div class="cv-row"><span class="cv-date">2007&#8211;2010</span><span class="cv-detail">AHRC Full Maintenance Grant &amp; Scholarship, University of St Andrews (approx. &#163;56,000)</span></div>
+    </div>
+
+    <h3>Selected Recent Presentations</h3>
+    <div class="cv-block">
+      <div class="cv-row"><span class="cv-date">Sep 2026</span><span class="cv-detail">&#8216;On growing up: insights from Plato&#8217;s <em>Gorgias</em>&#8217;, Keeling Colloquium, UCL</span></div>
+      <div class="cv-row"><span class="cv-date">May 2026</span><span class="cv-detail">&#8216;Education and the Law in EN X.9&#8217;, Workshop on <em>NE X.6&#8211;9</em>, Prague</span></div>
+      <div class="cv-row"><span class="cv-date">Apr 2026</span><span class="cv-detail">&#8216;Contemplation in Aristotle&#8217;s Other Ethics&#8217;, Keeling Workshop, UCL</span></div>
+      <div class="cv-row"><span class="cv-date">Apr 2026</span><span class="cv-detail">&#8216;What did Aristotle make of Plato&#8217;s Cave?&#8217;, BSHP Annual Conference, London</span></div>
+      <div class="cv-row"><span class="cv-date">Apr 2025</span><span class="cv-detail">&#8216;Law and the Divine in Aristotle&#8217;, conference on Aristotle&#8217;s practical philosophy, KCL</span></div>
+      <div class="cv-row"><span class="cv-date">May 2024</span><span class="cv-detail">&#8216;Sipping Wisdom&#8217;, conference on Virtue Epistemology in Plato, KCL</span></div>
+      <div class="cv-row"><span class="cv-date">Mar 2023</span><span class="cv-detail">&#8216;Contemplation in Aristotle&#8217;s Other Ethics&#8217;, Keynote, Keeling Graduate Conference, UCL</span></div>
+    </div>
+
+    <h3>Languages</h3>
+    <p style="font-size:0.93rem;">German &#183; English &#183; French &#183; Latin &#183; Ancient Greek &#183; Sanskrit</p>
+
+    <h3>Editorial &amp; Professional Service</h3>
+    <div class="cv-block">
+      <div class="cv-row"><span class="cv-date">2025&#8211;26</span><span class="cv-detail">King&#8217;s Carbon Pricing Working Group</span></div>
+      <div class="cv-row"><span class="cv-date">2024</span><span class="cv-detail">King&#8217;s Offsetting Working Group (developing King&#8217;s strategy on decarbonisation and offsetting)</span></div>
+      <div class="cv-row"><span class="cv-date">2023&#8211;26</span><span class="cv-detail">External Examiner, undergraduate programme in philosophy, University of Edinburgh</span></div>
+      <div class="cv-row"><span class="cv-date">2019&#8211;25</span><span class="cv-detail">Member of the Editorial Board, <em>British Journal for the History of Philosophy</em></span></div>
+      <div class="cv-row"><span class="cv-date">2019&#8211;22</span><span class="cv-detail">Faculty Senior Tutor (Arts and Humanities), King&#8217;s College London &#8212; 0.3 FTE administrative role</span></div>
+      <div class="cv-row"><span class="cv-date">2020&#8211;21</span><span class="cv-detail">Referee for ERC grant application (value &#8364;2.5m)</span></div>
+      <div class="cv-row"><span class="cv-date">2017; 2023</span><span class="cv-detail">Referee for Austrian Science Fund grant application</span></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2><span class="section-num">05</span>Contact</h2>
+    <p>I am happy to hear from researchers, prospective students, and anyone with questions about my work.</p>
+    <p style="margin-top:1rem;">
+      <strong>Email:</strong> <a href="mailto:joachim.aufderheide@kcl.ac.uk" style="color:var(--link);">joachim.aufderheide@kcl.ac.uk</a><br>
+      <strong>Address:</strong> Philosophy Department, King&#8217;s College London, WC2R 2LS
+    </p>
+    <p style="margin-top:1.25rem; font-size:0.9rem; color:var(--ink-faint);">
+      Research record:
+      <a href="https://orcid.org/0000-0001-7080-4256" target="_blank" rel="noopener" style="color:var(--link);">ORCID 0000-0001-7080-4256</a>
+      &#160;&#183;&#160;
+      <a href="https://kclpure.kcl.ac.uk/portal/en/persons/joachim.aufderheide" target="_blank" rel="noopener" style="color:var(--link);">KCL Research Portal</a>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Joachim Aufderheide &#160;&#183;&#160; Reader in Philosophy &#160;&#183;&#160; King&#8217;s College London</p>
+  <p style="margin-top:0.4rem;">
+    <a href="https://orcid.org/0000-0001-7080-4256" target="_blank" rel="noopener">ORCID</a>
+    &#160;&#183;&#160;
+    <a href="https://kclpure.kcl.ac.uk/portal/en/persons/joachim.aufderheide" target="_blank" rel="noopener">KCL Profile</a>
+  </p>
+</footer>
+
+<script>
+  // Sections visible by default; animation added only when JS runs
+  var sections = document.querySelectorAll('section');
+  sections.forEach(function(s) { s.classList.add('animate-ready'); });
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.05 });
+    sections.forEach(function(s) { obs.observe(s); });
+  } else {
+    // Fallback: show all immediately if browser doesn't support IntersectionObserver
+    sections.forEach(function(s) { s.classList.add('visible'); });
+  }
+</script>
+
+</body>
+</html>
